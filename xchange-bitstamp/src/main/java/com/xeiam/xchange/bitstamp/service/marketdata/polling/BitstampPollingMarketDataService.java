@@ -26,7 +26,6 @@ import java.util.List;
 
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
-import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.bitstamp.BitStamp;
 import com.xeiam.xchange.bitstamp.BitstampAdapters;
 import com.xeiam.xchange.bitstamp.BitstampUtils;
@@ -114,11 +113,6 @@ public class BitstampPollingMarketDataService extends BasePollingExchangeService
   public List<CurrencyPair> getExchangeSymbols() {
 
     return BitstampUtils.CURRENCY_PAIRS;
-  }
-
-	@Override
-  public Trades getTrades(String tradableIdentifier, String currency, long since) {
-		throw new NotYetImplementedForExchangeException();
   }
 
 }

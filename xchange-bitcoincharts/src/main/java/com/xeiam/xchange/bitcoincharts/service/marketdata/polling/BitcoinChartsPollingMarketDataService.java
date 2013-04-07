@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import com.xeiam.xchange.CachedDataSession;
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
-import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.bitcoincharts.BitcoinCharts;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsAdapters;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsUtils;
@@ -125,11 +124,6 @@ public class BitcoinChartsPollingMarketDataService extends BasePollingExchangeSe
     Assert.isTrue(currency.equals(Currencies.BTC), "Base curreny must be " + Currencies.BTC + " for this exchange");
     Assert.isTrue(BitcoinChartsUtils.isValidCurrencyPair(new CurrencyPair(tradableIdentifier, currency)), "currencyPair is not valid:" + tradableIdentifier + " " + currency);
 
-  }
-
-	@Override
-  public Trades getTrades(String tradableIdentifier, String currency, long since) {
-		throw new NotYetImplementedForExchangeException();
   }
 
 }

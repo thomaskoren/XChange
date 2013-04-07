@@ -34,11 +34,6 @@ import com.xeiam.xchange.dto.Order.OrderType;
 public final class Trade implements Comparable<Trade> {
 
   /**
-   * The transaction ID of this trade.
-   */
-	private final Long tid;
-	
-  /**
    * Did this trade result from the execution of a bid or a ask?
    */
   private final OrderType type;
@@ -76,20 +71,14 @@ public final class Trade implements Comparable<Trade> {
    * @param price The price (either the bid or the ask)
    * @param timestamp The timestamp when the order was placed. Exchange matching is usually price first then timestamp asc to clear older orders
    */
-  public Trade(Long tid, OrderType type, BigDecimal tradableAmount, String tradableIdentifier, String transactionCurrency, BigMoney price, Date timestamp) {
+  public Trade(OrderType type, BigDecimal tradableAmount, String tradableIdentifier, String transactionCurrency, BigMoney price, Date timestamp) {
 
-  	this.tid = tid;
     this.type = type;
     this.tradableAmount = tradableAmount;
     this.tradableIdentifier = tradableIdentifier;
     this.transactionCurrency = transactionCurrency;
     this.price = price;
     this.timestamp = timestamp;
-  }
-  
-  public Long getTid() {
-
-    return tid;
   }
 
   public OrderType getType() {

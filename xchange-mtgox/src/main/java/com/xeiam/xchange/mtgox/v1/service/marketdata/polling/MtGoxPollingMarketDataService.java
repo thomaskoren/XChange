@@ -24,7 +24,6 @@ package com.xeiam.xchange.mtgox.v1.service.marketdata.polling;
 import java.util.List;
 
 import com.xeiam.xchange.ExchangeSpecification;
-import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.marketdata.Ticker;
@@ -134,10 +133,5 @@ public class MtGoxPollingMarketDataService extends BasePollingExchangeService im
   public List<CurrencyPair> getExchangeSymbols() {
 
     return MtGoxUtils.CURRENCY_PAIRS;
-  }
-
-	@Override
-  public Trades getTrades(String tradableIdentifier, String currency, long since) {
-		throw new NotYetImplementedForExchangeException();
   }
 }

@@ -26,7 +26,6 @@ import com.xeiam.xchange.CachedDataSession;
 import com.xeiam.xchange.ExchangeException;
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
-import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.OrderBook;
 import com.xeiam.xchange.dto.marketdata.Ticker;
@@ -153,11 +152,6 @@ public class OERPollingMarketDataService extends BasePollingExchangeService impl
     Assert.isTrue(currency.equals("USD"), "Base curreny must be USD for this exchange");
     Assert.isTrue(OERUtils.isValidCurrencyPair(new CurrencyPair(tradableIdentifier, currency)), "currencyPair is not valid:" + tradableIdentifier + " " + currency);
 
-  }
-
-	@Override
-  public Trades getTrades(String tradableIdentifier, String currency, long since) {
-		throw new NotYetImplementedForExchangeException();
   }
 
 }

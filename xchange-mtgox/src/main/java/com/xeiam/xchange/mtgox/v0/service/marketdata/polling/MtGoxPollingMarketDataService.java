@@ -129,9 +129,4 @@ public class MtGoxPollingMarketDataService extends BasePollingExchangeService im
 
     return MtGoxUtils.CURRENCY_PAIRS;
   }
-
-	@Override
-  public Trades getTrades(String tradableIdentifier, String currency, long since) {
-		throw new NotYetImplementedForExchangeException();
-  }
 }

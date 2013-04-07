@@ -26,7 +26,6 @@ import java.util.List;
 
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
-import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.bitfloor.Bitfloor;
 import com.xeiam.xchange.bitfloor.BitfloorAdapters;
 import com.xeiam.xchange.bitfloor.BitfloorUtils;
@@ -116,11 +115,6 @@ public class BitfloorPollingMarketDataService extends BasePollingExchangeService
   public List<CurrencyPair> getExchangeSymbols() {
 
     return BitfloorUtils.CURRENCY_PAIRS;
-  }
-
-	@Override
-  public Trades getTrades(String tradableIdentifier, String currency, long since) {
-	  throw new NotYetImplementedForExchangeException();
   }
 
 }
