@@ -25,6 +25,7 @@ package com.xeiam.xchange.bitcoin24;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Depth;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Ticker;
@@ -46,6 +47,6 @@ public interface Bitcoin24 {
 
   @GET
   @Path("{currency}/trades.json")
-  Bitcoin24Trade[] getTrades(@PathParam("currency") String currency);
+  Bitcoin24Trade[] getTrades(@PathParam("currency") String currency, @QueryParam("since") long sinceId);
 
 }

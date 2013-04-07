@@ -91,16 +91,40 @@ public class Bitcoin24PollingMarketDataService implements PollingMarketDataServi
     return new OrderBook(asks, bids);
   }
 
+  /**
+   * Get the trades recently performed by the exchange.<br>
+   * <br>
+   * might result in HTTP error 500 if too much trades were performed recently on Bitcoin-24.<br>
+   * consider to use overloaded method with parameter <code>sinceId</code>.
+   */
   @Override
   public Trades getTrades(String tradableIdentifier, String currency) {
 
     verify(tradableIdentifier, currency);
-
-    Bitcoin24Trade[] BTCETrades = bitcoin24.getTrades(currency.toUpperCase());
+    
+    Bitcoin24Trade[] BTCETrades = bitcoin24.getTrades(currency.toUpperCase(), 0);
 
     return Bitcoin24Adapters.adaptTrades(BTCETrades, tradableIdentifier, currency);
   }
+  
+  /**
+   * Get the trades recently performed by the exchange 
+   * 
+   * @param tradableIdentifier The identifier to use (e.g. BTC or GOOG)
+   * @param currency The identifier to use (e.g. BTC or GOOG)
+   * @param sinceId return trades perfomed by exchage since this trade id
+   * @return the trades recently performed by the exchange 
+   */
+  public Bitcoin24Trade[] getTrades(String tradableIdentifier, String currency, long sinceId) {
 
+	    verify(tradableIdentifier, currency);
+
+	    Bitcoin24Trade[] BTCETrades = bitcoin24.getTrades(currency.toUpperCase(), sinceId);
+
+	    return BTCETrades;
+	    //return Bitcoin24Adapters.adaptTrades(BTCETrades, tradableIdentifier, currency);
+	  }
+  
   /**
    * Verify
    * 
