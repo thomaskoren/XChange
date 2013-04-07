@@ -23,20 +23,25 @@ package com.xeiam.xchange.bitcoin24;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.joda.money.BigMoney;
 
+import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24AccountInfo;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Ticker;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Trade;
+import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.MoneyUtils;
 import com.xeiam.xchange.dto.Order.OrderType;
+import com.xeiam.xchange.dto.account.AccountInfo;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 import com.xeiam.xchange.dto.marketdata.Ticker.TickerBuilder;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
 import com.xeiam.xchange.dto.trade.LimitOrder;
+import com.xeiam.xchange.dto.trade.Wallet;
 import com.xeiam.xchange.utils.DateUtils;
 
 /**
@@ -156,6 +161,23 @@ public final class Bitcoin24Adapters {
     }
 
     return TickerBuilder.newInstance().withTradableIdentifier(tradableIdentifier).withLast(last).withBid(bid).withAsk(ask).withHigh(high).withLow(low).withVolume(volume).build();
+  }
+  
+  /**
+   * Adapts a Bitcoin24AccountInfo to an AccountInfo Object
+   * 
+   * @param bitcoin24accInfo
+   * @param username
+   * @return
+   */
+  public static AccountInfo adaptAccountInfo(Bitcoin24AccountInfo bitcoin24accInfo, String username) {
+
+  	// Adapt to XChange DTOs
+  	Wallet eurWallet = Wallet.createInstance(Currencies.EUR, bitcoin24accInfo.getEurBalance());
+    Wallet usdWallet = Wallet.createInstance(Currencies.USD, bitcoin24accInfo.getUsdBalance());
+    Wallet btcWallet = Wallet.createInstance(Currencies.BTC, bitcoin24accInfo.getBtcBalance());
+  	
+    return new AccountInfo(username, Arrays.asList(eurWallet, usdWallet, btcWallet));
   }
 
 }
