@@ -25,6 +25,7 @@ import java.util.List;
 
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
+import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.btce.BTCE;
 import com.xeiam.xchange.btce.BTCEAdapters;
 import com.xeiam.xchange.btce.BTCEUtils;
@@ -119,6 +120,11 @@ public class BTCEPollingMarketDataService implements PollingMarketDataService {
   public List<CurrencyPair> getExchangeSymbols() {
 
     return BTCEUtils.CURRENCY_PAIRS;
+  }
+
+	@Override
+  public Trades getTrades(String tradableIdentifier, String currency, long since) {
+		throw new NotYetImplementedForExchangeException();
   }
 
 }

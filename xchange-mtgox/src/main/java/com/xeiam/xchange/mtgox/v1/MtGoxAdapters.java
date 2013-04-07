@@ -173,6 +173,7 @@ public final class MtGoxAdapters {
    */
   public static Trade adaptTrade(MtGoxTrade mtGoxTrade) {
 
+  	Long tid = mtGoxTrade.getTid();
     OrderType orderType = mtGoxTrade.getTradeType().equals("bid") ? OrderType.BID : OrderType.ASK;
     BigDecimal amount = new BigDecimal(mtGoxTrade.getAmountInt()).divide(new BigDecimal(MtGoxUtils.BTC_VOLUME_AND_AMOUNT_INT_2_DECIMAL_FACTOR));
     String tradableIdentifier = mtGoxTrade.getItem();
@@ -181,7 +182,7 @@ public final class MtGoxAdapters {
 
     Date dateTime = DateUtils.fromMillisUtc(mtGoxTrade.getDate() * 1000L);
 
-    return new Trade(orderType, amount, tradableIdentifier, transactionCurrency, price, dateTime);
+    return new Trade(tid, orderType, amount, tradableIdentifier, transactionCurrency, price, dateTime);
   }
 
   public static OrderBookUpdate adaptDepthUpdate(MtGoxDepthUpdate mtGoxDepthUpdate) {

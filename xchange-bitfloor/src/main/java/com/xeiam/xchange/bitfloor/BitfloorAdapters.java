@@ -112,7 +112,7 @@ public final class BitfloorAdapters {
 
     List<Trade> trades = new ArrayList<Trade>();
     for (BitfloorTransaction tx : transactions) {
-      trades.add(new Trade(null, tx.getAmount(), tradableIdentifier, currency, BigMoney.of(CurrencyUnit.of(currency), tx.getPrice()), tx.getTimestamp()));
+      trades.add(new Trade(tx.getSeq(), null, tx.getAmount(), tradableIdentifier, currency, BigMoney.of(CurrencyUnit.of(currency), tx.getPrice()), tx.getTimestamp()));
     }
     return new Trades(trades);
   }

@@ -144,6 +144,8 @@ public final class BitcoinCentralAdapters {
       trades.add(
 
       new Trade(
+      		
+      null,
 
       null,
 
