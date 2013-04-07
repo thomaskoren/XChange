@@ -94,5 +94,18 @@ public interface PollingMarketDataService {
    * @return The Trades @ If the exchange does not support this request
    */
   Trades getTrades(String tradableIdentifier, String currency);
+  
+  /**
+   * <p>
+   * Get the trades recently performed by the exchange, after
+   * the given transaction id in <code>since</code>.
+   * </p>
+   * 
+   * @param tradableIdentifier The identifier to use (e.g. BTC or GOOG)
+   * @param currency The currency of interest, null if irrelevant
+   * @param since The transaction ids to ignore in the result
+   * @return The Trades @ If the exchange does not support this request
+   */
+  Trades getTrades(String tradableIdentifier, String currency, long since);
 
 }

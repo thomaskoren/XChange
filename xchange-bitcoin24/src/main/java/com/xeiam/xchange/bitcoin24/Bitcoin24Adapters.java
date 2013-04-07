@@ -104,14 +104,14 @@ public final class Bitcoin24Adapters {
    * @param Bitcoin24Trade A Bitcoin24 trade
    * @return The XChange Trade
    */
-  public static Trade adaptTrade(Bitcoin24Trade Bitcoin24Trade, String tradableIdentifier, String currency) {
+  public static Trade adaptTrade(Bitcoin24Trade bitcoin24Trade, String tradableIdentifier, String currency) {
 
-    OrderType orderType = Bitcoin24Trade.equals("bid") ? OrderType.BID : OrderType.ASK;
-    BigDecimal amount = Bitcoin24Trade.getAmount();
-    BigMoney price = MoneyUtils.parse(currency + " " + Bitcoin24Trade.getPrice());
-    Date date = DateUtils.fromMillisUtc(Bitcoin24Trade.getDate() * 1000L);
+    OrderType orderType = bitcoin24Trade.equals("bid") ? OrderType.BID : OrderType.ASK;
+    BigDecimal amount = bitcoin24Trade.getAmount();
+    BigMoney price = MoneyUtils.parse(currency + " " + bitcoin24Trade.getPrice());
+    Date date = DateUtils.fromMillisUtc(bitcoin24Trade.getDate() * 1000L);
 
-    return new Trade(orderType, amount, tradableIdentifier, currency, price, date);
+    return new Trade(bitcoin24Trade.getTid(), orderType, amount, tradableIdentifier, currency, price, date);
   }
 
   /**

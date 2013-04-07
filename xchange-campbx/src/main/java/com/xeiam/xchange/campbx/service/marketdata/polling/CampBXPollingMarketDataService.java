@@ -26,6 +26,7 @@ import java.util.List;
 
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
+import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.campbx.CampBX;
 import com.xeiam.xchange.campbx.CampBXAdapters;
 import com.xeiam.xchange.campbx.CampBXUtils;
@@ -104,5 +105,10 @@ public class CampBXPollingMarketDataService extends BasePollingExchangeService i
   public List<CurrencyPair> getExchangeSymbols() {
 
     return CampBXUtils.CURRENCY_PAIRS;
+  }
+
+	@Override
+  public Trades getTrades(String tradableIdentifier, String currency, long since) {
+		throw new NotYetImplementedForExchangeException();
   }
 }

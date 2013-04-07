@@ -118,6 +118,7 @@ public final class BTCEAdapters {
    */
   public static Trade adaptTrade(BTCETrade BTCETrade) {
 
+  	Long tid = BTCETrade.getTid();
     OrderType orderType = BTCETrade.equals("bid") ? OrderType.BID : OrderType.ASK;
     BigDecimal amount = BTCETrade.getAmount();
     String currency = BTCETrade.getPriceCurrency();
@@ -125,7 +126,7 @@ public final class BTCEAdapters {
     String tradableIdentifier = BTCETrade.getItem();
     Date date = DateUtils.fromMillisUtc(BTCETrade.getDate() * 1000L);
 
-    return new Trade(orderType, amount, tradableIdentifier, currency, price, date);
+    return new Trade(tid, orderType, amount, tradableIdentifier, currency, price, date);
   }
 
   /**

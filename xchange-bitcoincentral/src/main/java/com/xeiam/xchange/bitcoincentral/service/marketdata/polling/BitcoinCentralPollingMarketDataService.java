@@ -26,6 +26,7 @@ import java.util.List;
 
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.NotAvailableFromExchangeException;
+import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.bitcoincentral.BitcoinCentral;
 import com.xeiam.xchange.bitcoincentral.BitcoinCentralAdapters;
 import com.xeiam.xchange.bitcoincentral.BitcoinCentralUtils;
@@ -104,5 +105,10 @@ public class BitcoinCentralPollingMarketDataService extends BasePollingExchangeS
     Assert.notNull(tradableIdentifier, "tradableIdentifier cannot be null");
     Assert.notNull(currency, "currency cannot be null");
     Assert.isTrue(BitcoinCentralUtils.isValidCurrencyPair(new CurrencyPair(tradableIdentifier, currency)), "currencyPair is not valid:" + tradableIdentifier + " " + currency);
+  }
+
+	@Override
+  public Trades getTrades(String tradableIdentifier, String currency, long since) {
+	  throw new NotYetImplementedForExchangeException();
   }
 }
