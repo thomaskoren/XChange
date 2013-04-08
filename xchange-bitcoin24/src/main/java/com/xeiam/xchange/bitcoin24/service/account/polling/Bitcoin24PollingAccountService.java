@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 
 import com.xeiam.xchange.ExchangeException;
 import com.xeiam.xchange.ExchangeSpecification;
+import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.bitcoin24.Bitcoin24;
 import com.xeiam.xchange.bitcoin24.Bitcoin24Adapters;
 import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24AccountInfo;
+import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24BtcAddress;
 import com.xeiam.xchange.dto.account.AccountInfo;
 import com.xeiam.xchange.rest.RestProxyFactory;
 import com.xeiam.xchange.service.account.polling.PollingAccountService;
@@ -41,13 +43,16 @@ public class Bitcoin24PollingAccountService extends BasePollingExchangeService i
 
 	@Override
   public String withdrawFunds(BigDecimal amount, String address) {
-	  // TODO Auto-generated method stub
-	  return null;
+	  throw new NotYetImplementedForExchangeException();
   }
 
 	@Override
   public String requestBitcoinDepositAddress(String... arguments) {
-	  // TODO Auto-generated method stub
-	  return null;
+		Bitcoin24BtcAddress btcAddr = btc24.getBitcoinAddress(exchangeSpecification.getUserName(), exchangeSpecification.getApiKey(), "get_addr");
+    if(btcAddr.getError() != null) {
+      throw new ExchangeException("Error getting Bitcoin Address. " + btcAddr.getError());
+    }
+
+    return btcAddr.getBtcAddress();
   }
 }

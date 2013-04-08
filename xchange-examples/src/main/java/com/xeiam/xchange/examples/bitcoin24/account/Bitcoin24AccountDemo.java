@@ -28,8 +28,7 @@ public class Bitcoin24AccountDemo {
     AccountInfo accountInfo = accountService.getAccountInfo();
     System.out.println("AccountInfo as String: " + accountInfo.toString());
 
-    // TODO IMPLEMENT
-    //String depositAddress = accountService.requestBitcoinDepositAddress(null, null);
-    //System.out.println("Deposit address: " + depositAddress);
+    String depositAddress = accountService.requestBitcoinDepositAddress();
+    System.out.println("Deposit address: " + depositAddress);
 	}
 }

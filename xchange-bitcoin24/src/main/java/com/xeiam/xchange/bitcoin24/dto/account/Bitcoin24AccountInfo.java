@@ -48,6 +48,6 @@ public class Bitcoin24AccountInfo {
 
   @Override
   public String toString() {
-    return String.format("Balance{eurBalance=%s, usdBalance=%s, btcBalance=%s, btcAvailable=%s,}", eurBalance, usdBalance, btcBalance, btcAvailable);
+    return String.format("Balance{eurBalance=%s, usdBalance=%s, btcBalance=%s, btcAvailable=%s}", eurBalance, usdBalance, btcBalance, btcAvailable);
   }
 }
