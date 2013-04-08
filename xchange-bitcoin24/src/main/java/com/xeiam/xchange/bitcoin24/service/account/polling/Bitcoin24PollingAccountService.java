@@ -9,6 +9,7 @@ import com.xeiam.xchange.bitcoin24.Bitcoin24;
 import com.xeiam.xchange.bitcoin24.Bitcoin24Adapters;
 import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24AccountInfo;
 import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24BtcAddress;
+import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24WithdrawBtc;
 import com.xeiam.xchange.dto.account.AccountInfo;
 import com.xeiam.xchange.rest.RestProxyFactory;
 import com.xeiam.xchange.service.account.polling.PollingAccountService;
@@ -42,11 +43,6 @@ public class Bitcoin24PollingAccountService extends BasePollingExchangeService i
   }
 
 	@Override
-  public String withdrawFunds(BigDecimal amount, String address) {
-	  throw new NotYetImplementedForExchangeException();
-  }
-
-	@Override
   public String requestBitcoinDepositAddress(String... arguments) {
 		Bitcoin24BtcAddress btcAddr = btc24.getBitcoinAddress(exchangeSpecification.getUserName(), exchangeSpecification.getApiKey(), "get_addr");
     if(btcAddr.getError() != null) {
@@ -54,5 +50,15 @@ public class Bitcoin24PollingAccountService extends BasePollingExchangeService i
     }
 
     return btcAddr.getBtcAddress();
+  }
+	
+	@Override
+  public String withdrawFunds(BigDecimal amount, String address) {
+		Bitcoin24WithdrawBtc wd = btc24.withdrawBitcoin(exchangeSpecification.getUserName(), exchangeSpecification.getApiKey(), "withdraw_btc", amount, address);
+    if(wd.getError() != null) {
+      throw new ExchangeException("Error withdrawing. " + wd.getError());
+    }
+
+    return wd.getTransactionId();
   }
 }

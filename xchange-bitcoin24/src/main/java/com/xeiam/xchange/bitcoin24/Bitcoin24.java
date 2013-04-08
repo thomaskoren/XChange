@@ -22,6 +22,8 @@
  */
 package com.xeiam.xchange.bitcoin24;
 
+import java.math.BigDecimal;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -33,6 +35,7 @@ import javax.ws.rs.QueryParam;
 
 import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24AccountInfo;
 import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24BtcAddress;
+import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24WithdrawBtc;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Depth;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Ticker;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Trade;
@@ -66,4 +69,10 @@ public interface Bitcoin24 {
   @Produces("application/json")
   @Consumes("application/x-www-form-urlencoded")
   Bitcoin24BtcAddress getBitcoinAddress(@FormParam("user") String username, @FormParam("key") String apiKey, @FormParam("api") String apiFunction);
+
+  @POST
+  @Path("user_api.php")
+  @Produces("application/json")
+  @Consumes("application/x-www-form-urlencoded")
+  Bitcoin24WithdrawBtc withdrawBitcoin(@FormParam("user") String username, @FormParam("key") String apiKey, @FormParam("api") String apiFunction, @FormParam("amount") BigDecimal amount, @FormParam("address") String address);
 }
