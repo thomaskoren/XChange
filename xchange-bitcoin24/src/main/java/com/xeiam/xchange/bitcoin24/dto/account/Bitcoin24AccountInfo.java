@@ -12,18 +12,21 @@ public class Bitcoin24AccountInfo {
   private final BigDecimal usdBalance;
   private final BigDecimal btcBalance;
   private final BigDecimal btcAvailable;
-  private final String error;
+  private final String errCode;
+  private final String errMessage;
   
   public Bitcoin24AccountInfo(@JsonProperty("eur") BigDecimal eurBalance,
   														@JsonProperty("usd") BigDecimal usdBalance, 
   														@JsonProperty("btc") BigDecimal btcBalance,
   														@JsonProperty("btc_available") BigDecimal btcAvailable,
-  														@JsonProperty("error") String error) {
+  														@JsonProperty("error") String errCode,
+  														@JsonProperty("message") String errMessage) {
   	this.eurBalance = eurBalance;
     this.usdBalance = usdBalance;
     this.btcBalance = btcBalance;
     this.btcAvailable = btcAvailable;
-    this.error = error;
+    this.errCode = errCode;
+    this.errMessage = errMessage;
   }
   
   public BigDecimal getEurBalance() {
@@ -42,8 +45,12 @@ public class Bitcoin24AccountInfo {
     return btcAvailable;
   }
 
-  public String getError() {
-    return error;
+  public String getErrorCode() {
+    return errCode;
+  }
+  
+  public String getErrorMessage() {
+    return errMessage;
   }
 
   @Override

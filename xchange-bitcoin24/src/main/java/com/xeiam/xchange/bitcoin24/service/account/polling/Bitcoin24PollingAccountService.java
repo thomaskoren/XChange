@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import com.xeiam.xchange.ExchangeException;
 import com.xeiam.xchange.ExchangeSpecification;
-import com.xeiam.xchange.NotYetImplementedForExchangeException;
 import com.xeiam.xchange.bitcoin24.Bitcoin24;
 import com.xeiam.xchange.bitcoin24.Bitcoin24Adapters;
 import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24AccountInfo;
@@ -35,8 +34,8 @@ public class Bitcoin24PollingAccountService extends BasePollingExchangeService i
 	@Override
   public AccountInfo getAccountInfo() {
 		Bitcoin24AccountInfo accInfo = btc24.getAccountInfo(exchangeSpecification.getUserName(), exchangeSpecification.getApiKey(), "get_balance");
-    if(accInfo.getError() != null) {
-      throw new ExchangeException("Error getting AccountInfo. " + accInfo.getError());
+    if(accInfo.getErrorCode() != null) {
+      throw new ExchangeException("Error getting AccountInfo. Error Code: " + accInfo.getErrorCode() + "; Error Message: " + accInfo.getErrorMessage());
     }
 
     return Bitcoin24Adapters.adaptAccountInfo(accInfo, exchangeSpecification.getUserName());
