@@ -47,7 +47,7 @@ public class BTCEBasePollingService {
    */
   public BTCEBasePollingService(ExchangeSpecification exchangeSpecification) {
 
-    this.btce = RestProxyFactory.createProxy(BTCEAuthenticated.class, exchangeSpecification.getUri());
+    this.btce = RestProxyFactory.createProxy(BTCEAuthenticated.class, exchangeSpecification.getSslUri());
     this.apiKey = exchangeSpecification.getApiKey();
     this.signatureCreator = BTCEHmacPostBodyDigest.createInstance(exchangeSpecification.getSecretKey());
   }
@@ -60,7 +60,7 @@ public class BTCEBasePollingService {
 
     // If you run into problems with nonces (eg. you've once submitted a large nonce and can't use normal nonces any more),
     // you can request new api credentials (key, secret) with BTCE.
-    return (int) (System.currentTimeMillis() - START_MILLIS) / 250;
+    return (int) ((System.currentTimeMillis() - START_MILLIS) / 250L);
   }
 
   protected void checkResult(BTCEReturn<?> info) {
