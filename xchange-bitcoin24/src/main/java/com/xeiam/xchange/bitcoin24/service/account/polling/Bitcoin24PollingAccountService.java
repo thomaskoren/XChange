@@ -28,7 +28,7 @@ public class Bitcoin24PollingAccountService extends BasePollingExchangeService i
   public Bitcoin24PollingAccountService(ExchangeSpecification exchangeSpecification) {
 
     super(exchangeSpecification);
-    this.btc24 = RestProxyFactory.createProxy(Bitcoin24.class, exchangeSpecification.getUri());
+    this.btc24 = RestProxyFactory.createProxy(Bitcoin24.class, exchangeSpecification.getSslUri());
   }
 	
 	@Override
