@@ -26,6 +26,7 @@ import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeSpecification;
 import com.xeiam.xchange.bitcoin24.service.account.polling.Bitcoin24PollingAccountService;
 import com.xeiam.xchange.bitcoin24.service.marketdata.polling.Bitcoin24PollingMarketDataService;
+import com.xeiam.xchange.bitcoin24.service.trade.polling.Bitcoin24PollingTradeService;
 
 /**
  * <p>
@@ -60,6 +61,7 @@ public class Bitcoin24Exchange extends BaseExchange implements Exchange {
     super.applySpecification(exchangeSpecification);
     this.pollingMarketDataService = new Bitcoin24PollingMarketDataService(exchangeSpecification);
     this.pollingAccountService = new Bitcoin24PollingAccountService(exchangeSpecification);
+    this.pollingTradeService = new Bitcoin24PollingTradeService(exchangeSpecification);
   }
 
   @Override

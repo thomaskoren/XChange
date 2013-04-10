@@ -32,6 +32,7 @@ import org.joda.money.BigMoney;
 import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24AccountInfo;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Ticker;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Trade;
+import com.xeiam.xchange.bitcoin24.dto.trade.Bitcoin24OpenOrder;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.MoneyUtils;
 import com.xeiam.xchange.dto.Order.OrderType;
@@ -67,14 +68,11 @@ public final class Bitcoin24Adapters {
    * @return
    */
   public static LimitOrder adaptOrder(BigDecimal amount, BigDecimal price, String tradableIdentifier, String currency, String orderTypeString, String id) {
-
     // place a limit order
     OrderType orderType = orderTypeString.equalsIgnoreCase("bid") ? OrderType.BID : OrderType.ASK;
     BigMoney limitPrice;
     limitPrice = MoneyUtils.parse(currency + " " + price);
-
     return new LimitOrder(orderType, amount, tradableIdentifier, currency, limitPrice);
-
   }
 
   /**
@@ -87,9 +85,7 @@ public final class Bitcoin24Adapters {
    * @return
    */
   public static List<LimitOrder> adaptOrders(List<BigDecimal[]> Bitcoin24Orders, String tradableIdentifier, String currency, String orderType, String id) {
-
     List<LimitOrder> limitOrders = new ArrayList<LimitOrder>();
-
     for (BigDecimal[] bitcoin24Order : Bitcoin24Orders) {
       // Bid orderbook is reversed order. Insert at index 0 instead of
       // appending
@@ -99,7 +95,6 @@ public final class Bitcoin24Adapters {
         limitOrders.add(adaptOrder(bitcoin24Order[1], bitcoin24Order[0], tradableIdentifier, currency, orderType, id));
       }
     }
-
     return limitOrders;
   }
 
@@ -110,7 +105,6 @@ public final class Bitcoin24Adapters {
    * @return The XChange Trade
    */
   public static Trade adaptTrade(Bitcoin24Trade bitcoin24Trade, String tradableIdentifier, String currency) {
-
     OrderType orderType = bitcoin24Trade.equals("bid") ? OrderType.BID : OrderType.ASK;
     BigDecimal amount = bitcoin24Trade.getAmount();
     BigMoney price = MoneyUtils.parse(currency + " " + bitcoin24Trade.getPrice());
@@ -126,7 +120,6 @@ public final class Bitcoin24Adapters {
    * @return The trades
    */
   public static Trades adaptTrades(Bitcoin24Trade[] bitcoin24TTrades, String tradableIdentifier, String currency) {
-
     List<Trade> tradesList = new ArrayList<Trade>();
     for (Bitcoin24Trade Bitcoin24Trade : bitcoin24TTrades) {
       // Date is reversed order. Insert at index 0 instead of appending
@@ -142,7 +135,6 @@ public final class Bitcoin24Adapters {
    * @return
    */
   public static Ticker adaptTicker(Bitcoin24Ticker bitcoin24Ticker, String tradableIdentifier, String currency) {
-
     BigMoney last = MoneyUtils.parse(currency + " " + bitcoin24Ticker.getLast());
     BigMoney bid = MoneyUtils.parse(currency + " " + bitcoin24Ticker.getBuy());
     BigMoney ask = MoneyUtils.parse(currency + " " + bitcoin24Ticker.getSell());
@@ -171,7 +163,6 @@ public final class Bitcoin24Adapters {
    * @return
    */
   public static AccountInfo adaptAccountInfo(Bitcoin24AccountInfo bitcoin24accInfo, String username) {
-
   	// Adapt to XChange DTOs
   	Wallet eurWallet = Wallet.createInstance(Currencies.EUR, bitcoin24accInfo.getEurBalance());
     Wallet usdWallet = Wallet.createInstance(Currencies.USD, bitcoin24accInfo.getUsdBalance());
@@ -179,5 +170,27 @@ public final class Bitcoin24Adapters {
   	
     return new AccountInfo(username, Arrays.asList(eurWallet, usdWallet, btcWallet));
   }
+  
+  public static List<LimitOrder> adaptOrders(Bitcoin24OpenOrder[] bt24OpenOrders) {
+    List<LimitOrder> limitOrders = new ArrayList<LimitOrder>();
 
+    for(int i = 0; i < bt24OpenOrders.length; i++) {
+      limitOrders.add(adaptOrder(bt24OpenOrders[i]));
+    }
+
+    return limitOrders;
+  }
+  
+  private static LimitOrder adaptOrder(Bitcoin24OpenOrder bt24OpenOrder) {
+    OrderType orderType = bt24OpenOrder.getType().equals("1") ? OrderType.BID : OrderType.ASK;
+  	BigDecimal amount = bt24OpenOrder.getBtcAmountStart();
+    String tradableIdentifier = Currencies.BTC;
+    String transactionCurrency = bt24OpenOrder.getCurrency();
+    String id = bt24OpenOrder.getOrderId();
+    Date timestamp = new Date(bt24OpenOrder.getDate());
+    BigMoney limitPrice = MoneyUtils.parse(bt24OpenOrder.getCurrency() + " " + bt24OpenOrder.getPrice());
+
+    LimitOrder limitOrder = new LimitOrder(orderType, amount, tradableIdentifier, transactionCurrency, id, timestamp, limitPrice);
+    return limitOrder;
+  }
 }

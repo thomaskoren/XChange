@@ -39,6 +39,7 @@ import com.xeiam.xchange.bitcoin24.dto.account.Bitcoin24WithdrawBtc;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Depth;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Ticker;
 import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Trade;
+import com.xeiam.xchange.bitcoin24.dto.trade.Bitcoin24OpenOrder;
 
 /**
  * @author Michael Lagacé
@@ -46,6 +47,7 @@ import com.xeiam.xchange.bitcoin24.dto.marketdata.Bitcoin24Trade;
 @Path("api")
 public interface Bitcoin24 {
 
+	// Market Info
   @GET
   @Path("{currency}/ticker.json")
   Bitcoin24Ticker getTicker(@PathParam("currency") String currency);
@@ -56,23 +58,47 @@ public interface Bitcoin24 {
 
   @GET
   @Path("{currency}/trades.json")
-  Bitcoin24Trade[] getTrades(@PathParam("currency") String currency, @QueryParam("since") long sinceId);
+  Bitcoin24Trade[] getTrades(@PathParam("currency") String currency, 
+  													 @QueryParam("since")   long sinceId
+  													);
+
+  // Account Info
+  @POST
+  @Path("user_api.php")
+  @Produces("application/json")
+  @Consumes("application/x-www-form-urlencoded")
+  Bitcoin24AccountInfo getAccountInfo(@FormParam("user") String username, 
+  																		@FormParam("key")  String apiKey, 
+  																		@FormParam("api")  String apiFunction
+  																	 );
 
   @POST
   @Path("user_api.php")
   @Produces("application/json")
   @Consumes("application/x-www-form-urlencoded")
-  Bitcoin24AccountInfo getAccountInfo(@FormParam("user") String username, @FormParam("key") String apiKey, @FormParam("api") String apiFunction);
+  Bitcoin24BtcAddress getBitcoinAddress(@FormParam("user") String username, 
+  																			@FormParam("key")  String apiKey, 
+  																			@FormParam("api")  String apiFunction
+  																		 );
 
   @POST
   @Path("user_api.php")
   @Produces("application/json")
   @Consumes("application/x-www-form-urlencoded")
-  Bitcoin24BtcAddress getBitcoinAddress(@FormParam("user") String username, @FormParam("key") String apiKey, @FormParam("api") String apiFunction);
+  Bitcoin24WithdrawBtc withdrawBitcoin(@FormParam("user")    String username, 
+  																		 @FormParam("key")     String apiKey, 
+  																		 @FormParam("api")     String apiFunction, 
+  																		 @FormParam("amount")  BigDecimal amount, 
+  																		 @FormParam("address") String address
+  																		);
 
+  // Trade Info
   @POST
   @Path("user_api.php")
   @Produces("application/json")
   @Consumes("application/x-www-form-urlencoded")
-  Bitcoin24WithdrawBtc withdrawBitcoin(@FormParam("user") String username, @FormParam("key") String apiKey, @FormParam("api") String apiFunction, @FormParam("amount") BigDecimal amount, @FormParam("address") String address);
+  Bitcoin24OpenOrder[] getOpenOrders(@FormParam("user") String username, 
+  																   @FormParam("key")  String apiKey, 
+  																   @FormParam("api")  String apiFunction
+  																	);
 }
